@@ -26,7 +26,7 @@ func (s *Server) handleGetChatMember() http.HandlerFunc {
 			log.Printf("Error during GetChatMember: %s", err)
 			s.tools.Error(w, r, http.StatusBadRequest, err)
 		}
-		if tg.Ok {
+		if tg.Result.Status != "left" {
 			signature, err := s.getHmacToken()
 			if err != nil {
 				log.Printf("Error getting HMAC key: %s", err)
@@ -36,7 +36,7 @@ func (s *Server) handleGetChatMember() http.HandlerFunc {
 			s.tools.Respond(w, r, http.StatusOK, &response{Key: signature})
 		} else {
 			log.Print("Error StatusBadRequest: ", tg)
-			s.tools.Respond(w, r, http.StatusBadRequest, tg)
+			s.tools.Respond(w, r, http.StatusUnauthorized, "Вы не карлик.")
 		}
 	}
 }
