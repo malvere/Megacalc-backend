@@ -19,6 +19,7 @@ func SetCors(logger *logrus.Logger) *cors.Cors {
 			http.MethodOptions,
 		},
 		AllowedOrigins: []string{
+			"http://localhost:5173",
 			os.Getenv("ORIGIN_ALLOWED"),
 		},
 		AllowCredentials: true,
