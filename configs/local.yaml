@@ -1,0 +1,10 @@
+env: "local"
+token_ttl: 1h
+
+server:
+  port: 8080
+  timeout: 1h
+
+jwt:
+  path: "configs/"
+  name: "pemKeyFile.pem"
