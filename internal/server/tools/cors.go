@@ -20,6 +20,8 @@ func SetCors(logger *logrus.Logger) *cors.Cors {
 		},
 		AllowedOrigins: []string{
 			"http://localhost:5173",
+			"https://uptimerobot.com",
+			"http://www.uptimerobot.com",
 			os.Getenv("ORIGIN_ALLOWED"),
 		},
 		AllowCredentials: true,
