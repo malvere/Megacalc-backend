@@ -1,6 +1,10 @@
 env: "local"
 token_ttl: 1h
 
+database:
+  driver: "postgres"
+  url: "host=localhost dbname=yoba sslmode=disable"
+
 server:
   port: 8080
   timeout: 1h
