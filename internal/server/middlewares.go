@@ -45,7 +45,6 @@ func (s *Server) handleAuth(next http.Handler) http.Handler {
 		log.Print(tg.Result)
 		if tg.Result.Status == "creator" || tg.Result.Status == "administrator" || tg.Result.Status == "member" {
 			log.Print("TG fired")
-			s.tools.Respond(w, r, 200, tg)
 			next.ServeHTTP(w, r)
 		} else {
 			log.Print("DB fired")
