@@ -3,6 +3,12 @@ SELECT *
 FROM users
 WHERE telegram_id = $1 LIMIT 1;
 
+-- name: ListAllUsers :many
+SELECT *
+FROM users
+LIMIT 20
+OFFSET $1;
+
 -- name: CreateUser :one
 INSERT INTO users (
     user_id, telegram_id, invite_code_id
