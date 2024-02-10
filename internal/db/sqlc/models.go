@@ -14,6 +14,13 @@ type InviteCode struct {
 	Active bool      `json:"active"`
 }
 
+type PromoCode struct {
+	PromoID   uuid.UUID `json:"promo_id"`
+	PromoName string    `json:"promo_name"`
+	Promo     string    `json:"promo"`
+	Active    bool      `json:"active"`
+}
+
 type User struct {
 	UserID       uuid.UUID `json:"user_id"`
 	TelegramID   string    `json:"telegram_id"`

@@ -16,6 +16,10 @@ func (s *Server) configRouter() {
 	users.Use(s.handleAuth)
 	users.Handle("", s.handleGetChatMember2())
 
+	promoCodes := s.router.PathPrefix("/promo").Subrouter()
+	promoCodes.Use(s.handlePromoToken)
+	promoCodes.Handle("/code", s.handlePromoCodes())
+
 	secure := s.router.PathPrefix("/secure").Subrouter()
 	secure.Use(s.handleToken)
 	secure.Handle("/code", s.handleCodes())

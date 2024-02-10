@@ -25,6 +25,20 @@ func (s *Server) handleToken(next http.Handler) http.Handler {
 	})
 }
 
+func (s *Server) handlePromoToken(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		authHeader := r.Header.Get("Authorization")
+		token := strings.TrimPrefix(authHeader, "Bearer ")
+		log.Print(token)
+		if token == os.Getenv("PROMO_TOKEN") {
+			next.ServeHTTP(w, r)
+		} else {
+			s.tools.Error(w, r, http.StatusUnauthorized, errors.New("invalid token"))
+			return
+		}
+	})
+}
+
 func (s *Server) handleAuth(next http.Handler) http.Handler {
 	type request struct {
 		UserId string `json:"user_id,omitempty"`
