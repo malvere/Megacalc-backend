@@ -99,8 +99,60 @@ MegaCalc is a Golang backend service designed to facilitate convenient price cal
   ]
   ```
 
+### Promocodes
+
+List all active promocodes
+- **Method**: GET
+- **URL**: `http://localhost:8080/promo/code?state={Bool}`
+- **Description**: Deletes a user by their Telegram ID.
+- **Response**:
+  ```json
+  [
+      {
+        "promo_id": "e548b625-0387-4995-b065-62280d742456",
+        "promo_name": "ДАША",
+        "promo": "0/0;1000/6000;5000/30000;10000/55000;20000/110000::ДАША",
+        "active": true
+      },
+      {
+        "promo_id": "2ddd69d6-1260-46b6-8955-128f060bade8",
+        "promo_name": "ЖАЛКОЧТОЛИ",
+        "promo": "0/0;2000/18000;5000/45000;9000/82000;12000/110000::ЖАЛКОЧТОЛИ",
+        "active": true
+      },
+      {
+        "promo_id": "4804c5a3-d38a-438e-b5cd-b17bbc2dcb58",
+        "promo_name": "ЛАДНОКУПЛЮ",
+        "promo": "0/0;1000/11000;2000/18000;3000/27000;4000/40000::ЛАДНОКУПЛЮ",
+        "active": true
+      }
+  ]
+  ```
+
+Create new promocode
+- **Method**: POST
+- **URL**: `http://localhost:8080/promo/code`
+- **Body**:
+  ```json
+  {
+    "promo_name": "ПРОМИК",
+    "promo_string": "0/0;1000/2000;5000/20000;10000/35000;20000/85000::ПРОМИК",
+    "state": true
+  }
+  ```
+- **Description**: Retrieves a list of all invite codes. Page contains 20 entries.
+- **Response**:
+  ```json
+  {
+    "promo_id": "b236da5d-634b-4t8d-993f-f8697gfb52f8",
+    "promo_name": "ПРОМИК",
+    "promo": "0/0;1000/2000;5000/20000;10000/35000;20000/85000::ПРОМИК",
+    "active": true
+  }
+  ```
+
 ## Setup
-1. Clone the repository: `git clone <repository-url>`
+1. Clone the repository: `git clone https://github.com/malvere/Megacalc-backend`
 2. Install dependencies: `go mod download`
 3. Build the project: `go build`
 4. Run the server: `./megacalc-backend`
