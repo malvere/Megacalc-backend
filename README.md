@@ -20,6 +20,9 @@ Y8a 8 8 a8P          88    88    88  I8, ,8I  i8'    ,8I  i8'    ,8I Y8,        
 ---
 
 # MegaCalc (Backend)
+![GoLand](https://img.shields.io/badge/GoLand-0f0f0f?&style=for-the-badge&logo=goland&logoColor=white)
+![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 MegaCalc is a Golang backend service designed to facilitate convenient price calculations for users. It manages authentication for a Telegram web app and handles invite codes.
 
