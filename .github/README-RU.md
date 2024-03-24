@@ -21,25 +21,23 @@ Y8a 8 8 a8P          88    88    88  I8, ,8I  i8'    ,8I  i8'    ,8I Y8,        
 
 # MegaCalc (Backend)
 
-MegaCalc is a Golang backend service designed to facilitate convenient price calculations for users. It manages authentication for a Telegram web app and handles invite codes.
+MegaCalc - серверная часть калькулятора выгоды для СберМегаМаркета, отвечает за аутентификацию пользователей в TWA-приложении.
 
 [Frontend repo](https://github.com/malvere/Abuzometer-js)
 
-[RU Docs](.github/README-RU.md)
-
 ## Table of Contents
 
-- [Endpoints](#endpoints)
-- [Setup](#setup)
-- [Dependencies](#dependencies)
-- [Usage](#usage)
+- [Эндпоинты](#endpoints)
+- [Запуск](#setup)
+- [Зависимости](#dependencies)
+- [Использование](#usage)
 
-## Endpoints
+## Эндпоинты
 
-### Create Invite Code
+### Создание инвайт-кодов
 - **Method**: GET
 - **URL**: `http://localhost:8080/secure/code?code=t3s1c0d3`
-- **Description**: Creates an invite code. By default the code is activated.
+- **Description**: Создаёт инвайт код в базе данных, по умолчанию код помечается как активный.
 - **Response**:
   ```json
   {
@@ -49,10 +47,10 @@ MegaCalc is a Golang backend service designed to facilitate convenient price cal
   }
   ```
 
-### Create User
+### Создание пользователя
 - **Method**: GET
 - **URL**: `http://localhost:8080/user?tgid=12345678&code=t3s1c0d3`
-- **Description**: Creates a user and associates it with an invite code. Invite code is automatically set as `"active": false` in DB.
+- **Description**: СОздаёт пользователя и добалвяет к нему активный инвайт-код. Поле `active` у инвайт-кода помечается как `false` в БД.
 - **Response**:
   ```json
   {
@@ -62,7 +60,7 @@ MegaCalc is a Golang backend service designed to facilitate convenient price cal
   }
   ```
 
-### Delete User
+### Удаление пользователя
 - **Method**: DELETE
 - **URL**: `http://localhost:8080/secure/user`
 - **Body**:
@@ -71,13 +69,13 @@ MegaCalc is a Golang backend service designed to facilitate convenient price cal
     "telegram_id": "12345678"
   }
   ```
-- **Description**: Deletes a user by their Telegram ID.
+- **Description**: Удаляет пользователя по `TelegramID`
 - **Response**:
   ```json
   "User deleted! Telegram ID: 12345678"
   ```
 
-### List All Codes
+### Список всех инвайт-кодов
 - **Method**: POST
 - **URL**: `http://localhost:8080/secure/list-all-codes`
 - **Body**:
@@ -86,7 +84,7 @@ MegaCalc is a Golang backend service designed to facilitate convenient price cal
     "page": 0
   }
   ```
-- **Description**: Retrieves a list of all invite codes. Page contains 20 entries.
+- **Description**: Выводит список всех инвайт-кодов по 20 штук на странице.
 - **Response**:
   ```json
   [
@@ -103,12 +101,12 @@ MegaCalc is a Golang backend service designed to facilitate convenient price cal
   ]
   ```
 
-### Promocodes
+### Промокода
 
-List all active promocodes
+Список активных промокодов
 - **Method**: GET
 - **URL**: `http://localhost:8080/promo/code?state={Bool}`
-- **Description**: Deletes a user by their Telegram ID.
+- **Description**: Выводит список активных промокодов.
 - **Response**:
   ```json
   [
@@ -133,7 +131,7 @@ List all active promocodes
   ]
   ```
 
-Create new promocode
+Создание нового промокода
 - **Method**: POST
 - **URL**: `http://localhost:8080/promo/code`
 - **Body**:
@@ -144,7 +142,7 @@ Create new promocode
     "state": true
   }
   ```
-- **Description**: Retrieves a list of all invite codes. Page contains 20 entries.
+- **Description**: Создаёт новый промокод в базе.
 - **Response**:
   ```json
   {
@@ -155,28 +153,28 @@ Create new promocode
   }
   ```
 
-## Setup
-1. Clone the repository: `git clone https://github.com/malvere/Megacalc-backend`
-2. Install dependencies: `go mod download`
-3. Build the project: `go build`
-4. Run the server: `./megacalc-backend`
+## Запуск
+1. Клонирование репозитория: `git clone https://github.com/malvere/Megacalc-backend`
+2. Установка пакетов: `go mod download`
+3. Сборка: `go build`
+4. Запуск: `./megacalc-backend`
 
-### Environmental variables
-- `BOT_TOKEN=0123456789:ABCD...` - Telegram bot token from @botfather
-- `CHAT_ID=-1000123456789` - ChatID, participants will be able to access the app without invite codes (bot must be able to retrieve chat memeber list, e.g. have admin priveleges)
-- `CONFIG_PATH=./configs/local.yaml` - Config file path
-- `DB_URL="host=localhost dbname=megacalc sslmode=disable"` - Databse connection string
-- `ORIGIN_ALLOWED=https://abuzometer.js` - Frontend domain (for CORS policy)
-- `PROMO_TOKEN=promik` - Bearer-token for promo-codes management
-- `SECRET_TOKEN=0123456789abcd` - Bearer-token for invite-ode management
+### Переменные окружения
+- `BOT_TOKEN=0123456789:ABCD...` - Токен телеграм бота
+- `CHAT_ID=-1000123456789` - ID Чата, участникам которого будет доступен калькулятор (бот должен иметь дотуп к списку участников)
+- `CONFIG_PATH=./configs/local.yaml` - Путь к файлу конфигурации
+- `DB_URL="host=localhost dbname=megacalc sslmode=disable"` - Строка для подклбчения к БД
+- `ORIGIN_ALLOWED=https://abuzometer.js` - Домен где развёрнута фронтовая часть калькулятора
+- `PROMO_TOKEN=promik` - Bearer-токен для доступа к промокодам
+- `SECRET_TOKEN=0123456789abcd` - Bearer-токен для доступа к инвайт-кодам
 
 ## Dependencies
-- [Golang](https://golang.org/): The programming language used for the backend.
+- [Golang](https://golang.org/).
 
 
-## Usage
-1. Create an invite code using the `/secure/code` endpoint.
-2. Create a user using the `/user` endpoint with the Telegram ID and invite code.
-3. Retrieve a list of all invite codes using the `/secure/list-all-codes` endpoint.
+## Использование
+1. Создайте промкода через эндпоинт `/secure/code`.
+2. Добавить пользователя черещ `/user` с Telegram ID и инвайт-кодом.
+3. Список всех инвайт кодов можно получить через `/secure/list-all-codes`.
 
 ---
